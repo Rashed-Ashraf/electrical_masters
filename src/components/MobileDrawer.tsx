@@ -82,14 +82,14 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({ isOpen, onClose }) =
               <Wrench className="w-5 h-5 text-[#0098da]" />
               Our Services
             </Link>
-            <Link
+            {/* <Link
               href="/#reviews-section"
               onClick={onClose}
               className="flex items-center gap-3 px-3.5 py-3 rounded-lg text-[#c3e8ff] hover:text-white hover:bg-white/5 transition-colors font-medium text-[14px]"
             >
               <MessageSquare className="w-5 h-5 text-[#0098da]" />
               Client Reviews
-            </Link>
+            </Link> */}
             <Link
               href="/#faq-section"
               onClick={onClose}

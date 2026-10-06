@@ -30,7 +30,7 @@ export default function Home() {
         <ProductsSection />
         <ServicesSection />
         <CustomersSection />
-        <ReviewsSection />
+        {/* <ReviewsSection /> */}
         <FaqSection />
         <ContactSection />
       </main>
