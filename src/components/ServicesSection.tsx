@@ -1,7 +1,11 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import {
+  ChevronLeft,
+  ChevronRight,
+  ArrowRight,
   Layers,
   ShieldCheck,
   Zap,
@@ -9,121 +13,252 @@ import {
   Cpu,
   Lamp,
   CheckCircle2,
+  Wrench,
   Headphones,
-  ArrowRight,
+  Sparkles,
+  ClipboardCheck,
+  Timer,
 } from 'lucide-react';
+import { SERVICES_DATA, ServiceItem } from '../data/services';
 
-interface ServiceItem {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}
-
-const SERVICES: ServiceItem[] = [
-  {
-    icon: <Layers className="w-5 h-5" />,
-    title: 'Cable Tray and Cable Ladder',
-    description:
-      'Complete design and installation of cable management systems, including trays and ladder systems for efficient and organized electrical routing.',
-  },
-  {
-    icon: <ShieldCheck className="w-5 h-5" />,
-    title: 'Earthing of all Types',
-    description:
-      'Professional installation of various earthing systems to ensure electrical safety and compliance with industry standards and regulations.',
-  },
-  {
-    icon: <Zap className="w-5 h-5" />,
-    title: 'Lightening Protection System',
-    description:
-      'Expert design and installation of lightning protection systems to safeguard buildings and electrical infrastructure from lightning damage.',
-  },
-  {
-    icon: <Lightbulb className="w-5 h-5" />,
-    title: 'Cabling and Lighting',
-    description:
-      'Comprehensive cabling and lighting installation services, including commercial, industrial, and specialized lighting systems.',
-  },
-  {
-    icon: <Cpu className="w-5 h-5" />,
-    title: 'Power House Installation',
-    description:
-      'Complete setup of power houses with all necessary electrical equipment and systems for reliable power distribution and management.',
-  },
-  {
-    icon: <Lamp className="w-5 h-5" />,
-    title: 'Lighting Poles',
-    description:
-      'Installation of various types of lighting poles for outdoor areas, roadways, and industrial facilities with energy-efficient lighting solutions.',
-  },
-  {
-    icon: <CheckCircle2 className="w-5 h-5" />,
-    title: 'Installation, Testing, Commissioning of Low Voltage Switchgear',
-    description:
-      'Expert installation, comprehensive testing, and professional commissioning of low voltage switchgear systems for optimal performance and safety.',
-  },
-];
+const SLIDE_DURATION = 5000; // 5 seconds per slide
+const TICK_INTERVAL = 50; // 50ms tick
 
 export const ServicesSection: React.FC = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const touchStartX = useRef<number>(0);
+  const touchEndX = useRef<number>(0);
+
+  const totalSlides = SERVICES_DATA.length;
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % totalSlides);
+    setProgress(0);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
+    setProgress(0);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
+    setProgress(0);
+  };
+
+  // Timer progression effect with smooth progress & pause handling
+  useEffect(() => {
+    if (isPaused) return;
+
+    let startTime = Date.now();
+    const timer = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const pct = (elapsed / SLIDE_DURATION) * 100;
+
+      if (pct >= 100) {
+        setCurrentIndex((prev) => (prev + 1) % totalSlides);
+        setProgress(0);
+        startTime = Date.now();
+      } else {
+        setProgress(pct);
+      }
+    }, TICK_INTERVAL);
+
+    return () => clearInterval(timer);
+  }, [currentIndex, isPaused, totalSlides]);
+
+  // Touch Swipe Handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current - touchEndX.current > 50) {
+      nextSlide();
+    }
+    if (touchStartX.current - touchEndX.current < -50) {
+      prevSlide();
+    }
+  };
+
+  const getServiceIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'Layers':
+        return <Layers className="w-12 sm:w-16 h-12 sm:h-16" />;
+      case 'ShieldCheck':
+        return <ShieldCheck className="w-12 sm:w-16 h-12 sm:h-16" />;
+      case 'Zap':
+        return <Zap className="w-12 sm:w-16 h-12 sm:h-16" />;
+      case 'Lightbulb':
+        return <Lightbulb className="w-12 sm:w-16 h-12 sm:h-16" />;
+      case 'Cpu':
+        return <Cpu className="w-12 sm:w-16 h-12 sm:h-16" />;
+      case 'Lamp':
+        return <Lamp className="w-12 sm:w-16 h-12 sm:h-16" />;
+      case 'CheckCircle2':
+        return <CheckCircle2 className="w-12 sm:w-16 h-12 sm:h-16" />;
+      case 'Wrench':
+      default:
+        return <Wrench className="w-12 sm:w-16 h-12 sm:h-16" />;
+    }
+  };
+
+  const currentService = SERVICES_DATA[currentIndex];
+  const remainingSeconds = Math.max(1, Math.ceil(((100 - progress) / 100) * (SLIDE_DURATION / 1000)));
+
   return (
-    <section className="w-full px-4 sm:px-8 py-16 bg-[#002b40] relative overflow-hidden" id="services-section">
-      {/* Background Gradient & Overlay to match Hero section */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#002b40] via-[#002233] to-[#001c2b] pointer-events-none" />
+    <section className="w-full px-4 sm:px-8 py-16 bg-[#004d6d] text-white relative overflow-hidden" id="services-section">
+      {/* Dynamic Background Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#0098da]/15 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto flex flex-col gap-8">
-        {/* Header */}
-        <div className="flex flex-col items-center text-center gap-1.5">
-          <span className="font-title text-[#38bdf8] uppercase tracking-widest font-bold text-[12px]">
-            OUR SERVICES
-          </span>
-          <h2 className="font-title text-white text-[24px] sm:text-[32px] font-bold">
-            Comprehensive Electrical Services
-          </h2>
-          <div className="w-16 h-1 bg-[#0098da] rounded-full my-1.5" />
-          <p className="font-body text-[#c3e8ff] text-[15px] leading-relaxed max-w-2xl">
-            We provide a complete range of services for electrical systems and infrastructure, from installation and maintenance to testing and commissioning.
-          </p>
-        </div>
-
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {SERVICES.map((srv, idx) => (
-            <div
-              key={idx}
-              className="p-5 bg-[#003850]/80 border border-white/10 backdrop-blur-md rounded-xl shadow-lg flex items-start gap-4 hover:border-[#0098da]/60 hover:bg-[#00425e] transition-all group"
-            >
-              <div className="w-11 h-11 rounded-full bg-[#0098da]/20 text-[#38bdf8] group-hover:bg-[#0098da] group-hover:text-white flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors">
-                {srv.icon}
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <h3 className="font-title text-white text-[15px] font-bold leading-snug group-hover:text-[#38bdf8] transition-colors">
-                  {srv.title}
-                </h3>
-                <p className="font-body text-[#d5eefc]/90 text-[13px] leading-relaxed">
-                  {srv.description}
-                </p>
-              </div>
+      <div className="max-w-6xl mx-auto flex flex-col gap-8 relative z-10">
+        {/* Section Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/15 pb-5">
+          <div className="flex flex-col gap-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-[#c3e8ff] font-title text-[11px] font-bold uppercase tracking-wider w-fit border border-white/20 backdrop-blur-md">
+              <Sparkles className="w-3.5 h-3.5 text-[#38bdf8]" />
+              <span>Services Carousel</span>
             </div>
-          ))}
-        </div>
-
-        {/* Service Callout */}
-        <div className="p-6 bg-[#001926] border border-white/10 text-white rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left shadow-xl">
-          <div className="flex items-center gap-3.5">
-            <div className="w-11 h-11 rounded-full bg-[#0098da]/20 text-[#38bdf8] flex items-center justify-center flex-shrink-0">
-              <Headphones className="w-5 h-5 text-[#38bdf8]" />
-            </div>
-            <p className="font-title text-white text-[15px] font-bold">
-              Need a custom service package or specialized installation?
+            <h2 className="font-title text-white text-[24px] sm:text-[32px] font-bold leading-tight">
+              Turnkey Electrical Engineering Services
+            </h2>
+            <p className="font-body text-[#e1f0f8] text-[14px] sm:text-[15px] max-w-2xl">
+              Expert on-site installation, substation commissioning, chemical earthing, and lightning protection across Pakistan.
             </p>
           </div>
-          <a
-            href="#contact-section"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#0098da] hover:bg-[#0084bd] text-white font-title text-[13px] font-bold rounded-lg shadow-md active:scale-95 transition-all whitespace-nowrap"
+
+          <Link
+            href="/services"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/15 hover:bg-[#0098da] text-white font-title text-[13px] font-bold border border-white/20 transition-all self-start sm:self-end shadow-sm active:scale-95 backdrop-blur-md"
           >
-            <span>Contact Our Service Team</span>
+            <span>View All Services ({totalSlides})</span>
             <ArrowRight className="w-4 h-4" />
-          </a>
+          </Link>
+        </div>
+
+        {/* CAROUSEL FRAME */}
+        <div
+          className="relative w-full rounded-2xl sm:rounded-3xl bg-[#003850]/95 border border-white/20 shadow-2xl overflow-hidden group select-none backdrop-blur-md"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+
+          {/* Main Slide Stage */}
+          <div className="relative w-full min-h-[440px] sm:min-h-[500px] md:min-h-[540px] flex flex-col items-center justify-between p-6 sm:p-10 text-center">
+            {/* Slide Category Badge & Progress/Timer Tag */}
+            <div className="w-full flex items-center justify-between gap-2 z-20">
+              <span className="font-technical text-[10px] sm:text-[11px] uppercase tracking-widest text-[#38bdf8] bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 font-bold">
+                {currentService.badge}
+              </span>
+
+              {/* Slide Counter */}
+              <span className="font-technical text-[11px] text-[#98cded] bg-black/40 px-2.5 py-0.5 rounded-full border border-white/10 font-bold">
+                {currentIndex + 1} / {totalSlides}
+              </span>
+            </div>
+
+            {/* Slide Graphic / Center Feature Box */}
+            <div className="relative my-auto py-4 flex flex-col items-center justify-center max-w-2xl w-full z-10 transition-all duration-500 ease-out">
+              <div className="w-28 sm:w-36 h-28 sm:h-36 rounded-3xl bg-gradient-to-br from-[#0098da]/30 to-[#004d6d]/50 border-2 border-[#0098da]/50 text-[#38bdf8] flex items-center justify-center shadow-[0_0_35px_rgba(0,152,218,0.3)] mb-4 hover:scale-105 transition-transform">
+                {getServiceIcon(currentService.iconName)}
+              </div>
+
+              {/* Key Features Pill Bar */}
+              <div className="flex items-center justify-center gap-2 flex-wrap max-w-lg">
+                {currentService.standards.map((std, idx) => (
+                  <span
+                    key={idx}
+                    className="px-2.5 py-1 rounded-lg bg-black/40 border border-white/10 text-[#98cded] font-technical text-[11px] font-bold"
+                  >
+                    {std}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Bottom Caption Area (Slide Label & Text as in Reference) */}
+            <div className="w-full max-w-2xl flex flex-col items-center gap-2.5 z-20 mt-2">
+              <h3 className="font-title text-white text-[20px] sm:text-[24px] md:text-[26px] font-bold leading-snug">
+                {currentService.title}
+              </h3>
+              <p className="font-body text-[#c3e8ff] text-[13px] sm:text-[14.5px] leading-relaxed max-w-xl line-clamp-2">
+                {currentService.shortDesc}
+              </p>
+
+              {/* Action Buttons */}
+              <div className="flex items-center gap-3 pt-2">
+                <Link
+                  href={`/services#${currentService.id}`}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#0098da] hover:bg-[#0084bd] text-white font-title text-[13px] font-bold rounded-xl shadow-md active:scale-95 transition-all"
+                >
+                  <ClipboardCheck className="w-4 h-4" />
+                  <span>Explore Service Scope</span>
+                </Link>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white font-title text-[13px] font-semibold rounded-xl border border-white/15 transition-all"
+                >
+                  <span>Book Site Visit</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Left Chevron Navigation Arrow */}
+            <button
+              type="button"
+              onClick={prevSlide}
+              aria-label="Previous Slide"
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-black/40 hover:bg-[#0098da] text-white flex items-center justify-center transition-all border border-white/15 backdrop-blur-md shadow-lg z-30 active:scale-90 cursor-pointer"
+            >
+              <ChevronLeft className="w-6 sm:w-7 h-6 sm:h-7" />
+            </button>
+
+            {/* Right Chevron Navigation Arrow */}
+            <button
+              type="button"
+              onClick={nextSlide}
+              aria-label="Next Slide"
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-black/40 hover:bg-[#0098da] text-white flex items-center justify-center transition-all border border-white/15 backdrop-blur-md shadow-lg z-30 active:scale-90 cursor-pointer"
+            >
+              <ChevronRight className="w-6 sm:w-7 h-6 sm:h-7" />
+            </button>
+
+            {/* Bottom Horizontal Dash/Bar Indicators with Active Timer Fill */}
+            <div className="flex items-center justify-center gap-2 pt-6 pb-1 z-20">
+              {SERVICES_DATA.map((srv, idx) => {
+                const isActive = currentIndex === idx;
+                return (
+                  <button
+                    key={srv.id}
+                    type="button"
+                    onClick={() => goToSlide(idx)}
+                    aria-label={`Go to slide ${idx + 1}: ${srv.title}`}
+                    className={`h-2 rounded-full transition-all duration-300 cursor-pointer relative overflow-hidden ${
+                      isActive
+                        ? 'w-12 bg-white/20 shadow-[0_0_8px_rgba(56,189,248,0.4)]'
+                        : 'w-6 bg-white/30 hover:bg-white/60'
+                    }`}
+                  >
+                    {isActive && (
+                      <span
+                        className="absolute inset-y-0 left-0 bg-[#38bdf8] rounded-full transition-all duration-75 ease-linear"
+                        style={{ width: `${progress}%` }}
+                      />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </section>

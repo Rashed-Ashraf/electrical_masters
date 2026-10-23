@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Home, Zap, Wrench, MessageSquare, HelpCircle, PhoneCall, Send, X } from 'lucide-react';
+import { Home, Zap, Wrench, MessageSquare, HelpCircle, PhoneCall, Send, X, Layers } from 'lucide-react';
 
 interface MobileDrawerProps {
   isOpen: boolean;
@@ -59,52 +59,36 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({ isOpen, onClose }) =
           {/* Navigation Links */}
           <nav className="flex flex-col gap-1.5 font-title">
             <Link
-              href="/#hero"
+              href="/"
               onClick={onClose}
-              className="flex items-center gap-3 px-3.5 py-3 rounded-lg text-white bg-white/10 font-semibold text-[14px]"
+              className="flex items-center gap-3 px-3.5 py-3 rounded-lg text-white hover:bg-white/10 transition-colors font-semibold text-[14px]"
             >
-              <Home className="w-5 h-5 text-[#0098da]" />
+              <Home className="w-5 h-5 text-[#38bdf8]" />
               Home
             </Link>
             <Link
-              href="/#products-section"
+              href="/products"
               onClick={onClose}
-              className="flex items-center gap-3 px-3.5 py-3 rounded-lg text-[#c3e8ff] hover:text-white hover:bg-white/5 transition-colors font-medium text-[14px]"
+              className="flex items-center gap-3 px-3.5 py-3 rounded-lg text-[#c3e8ff] hover:text-white hover:bg-white/10 transition-colors font-medium text-[14px]"
             >
-              <Zap className="w-5 h-5 text-[#0098da]" />
-              Our Products
+              <Zap className="w-5 h-5 text-[#38bdf8]" />
+              Products Catalog
             </Link>
             <Link
-              href="/#services-section"
+              href="/services"
               onClick={onClose}
-              className="flex items-center gap-3 px-3.5 py-3 rounded-lg text-[#c3e8ff] hover:text-white hover:bg-white/5 transition-colors font-medium text-[14px]"
+              className="flex items-center gap-3 px-3.5 py-3 rounded-lg text-[#c3e8ff] hover:text-white hover:bg-white/10 transition-colors font-medium text-[14px]"
             >
-              <Wrench className="w-5 h-5 text-[#0098da]" />
+              <Wrench className="w-5 h-5 text-[#38bdf8]" />
               Our Services
             </Link>
-            {/* <Link
-              href="/#reviews-section"
-              onClick={onClose}
-              className="flex items-center gap-3 px-3.5 py-3 rounded-lg text-[#c3e8ff] hover:text-white hover:bg-white/5 transition-colors font-medium text-[14px]"
-            >
-              <MessageSquare className="w-5 h-5 text-[#0098da]" />
-              Client Reviews
-            </Link> */}
             <Link
-              href="/#faq-section"
+              href="/contact"
               onClick={onClose}
-              className="flex items-center gap-3 px-3.5 py-3 rounded-lg text-[#c3e8ff] hover:text-white hover:bg-white/5 transition-colors font-medium text-[14px]"
+              className="flex items-center gap-3 px-3.5 py-3 rounded-lg text-[#c3e8ff] hover:text-white hover:bg-white/10 transition-colors font-medium text-[14px]"
             >
-              <HelpCircle className="w-5 h-5 text-[#0098da]" />
-              FAQ
-            </Link>
-            <Link
-              href="/#contact-section"
-              onClick={onClose}
-              className="flex items-center gap-3 px-3.5 py-3 rounded-lg text-[#c3e8ff] hover:text-white hover:bg-white/5 transition-colors font-medium text-[14px]"
-            >
-              <PhoneCall className="w-5 h-5 text-[#0098da]" />
-              Contact Us
+              <PhoneCall className="w-5 h-5 text-[#38bdf8]" />
+              Contact Us &amp; Location Map
             </Link>
           </nav>
         </div>
@@ -112,7 +96,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({ isOpen, onClose }) =
         {/* Drawer Bottom CTA */}
         <div className="p-5 flex flex-col gap-3 bg-[#003850]">
           <Link
-            href="/#contact-section"
+            href="/contact"
             onClick={onClose}
             className="w-full h-11 flex items-center justify-center gap-2 bg-[#0098da] text-white font-title text-[14px] font-bold rounded-lg shadow-md hover:bg-[#0084bd] transition-all"
           >
@@ -127,4 +111,3 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({ isOpen, onClose }) =
     </div>
   );
 };
-

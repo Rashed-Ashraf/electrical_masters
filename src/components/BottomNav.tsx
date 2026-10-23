@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Home, Zap, Wrench, Send } from 'lucide-react';
+import { Home, Zap, Wrench, Send, PhoneCall } from 'lucide-react';
 
 export const BottomNav: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ export const BottomNav: React.FC = () => {
       <div className="flex items-center justify-around h-16 px-4">
         {/* Home */}
         <Link
-          href="/#hero"
+          href="/"
           className="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-0.5 text-[#0098da] font-title transition-colors"
         >
           <Home className="w-5 h-5 text-[#0098da]" />
@@ -19,7 +19,7 @@ export const BottomNav: React.FC = () => {
 
         {/* Products */}
         <Link
-          href="/#products-section"
+          href="/products"
           className="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-0.5 text-[#3e5261] hover:text-[#0098da] transition-colors"
         >
           <Zap className="w-5 h-5" />
@@ -28,7 +28,7 @@ export const BottomNav: React.FC = () => {
 
         {/* Floating Action Button: Send Message */}
         <Link
-          href="/#contact-section"
+          href="/contact"
           className="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-0.5 text-[#0098da] transition-transform active:scale-95 -mt-3"
           aria-label="Send Message"
         >
@@ -39,14 +39,22 @@ export const BottomNav: React.FC = () => {
 
         {/* Services */}
         <Link
-          href="/#services-section"
+          href="/services"
           className="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-0.5 text-[#3e5261] hover:text-[#0098da] transition-colors"
         >
           <Wrench className="w-5 h-5" />
           <span className="font-title text-[10px] font-medium">Services</span>
         </Link>
+
+        {/* Contact */}
+        <Link
+          href="/contact"
+          className="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-0.5 text-[#3e5261] hover:text-[#0098da] transition-colors"
+        >
+          <PhoneCall className="w-5 h-5" />
+          <span className="font-title text-[10px] font-medium">Contact</span>
+        </Link>
       </div>
     </nav>
   );
 };
-

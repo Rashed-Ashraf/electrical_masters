@@ -29,7 +29,7 @@ export const Footer: React.FC = () => {
               </div>
             </div>
             <p className="font-body text-[#d5eefc] text-[13px] leading-relaxed max-w-md">
-              Leading provider of industrial electrical switchgear and services with over 20 years of technical excellence, safety compliance, and power distribution engineering.
+              Leading provider of industrial electrical switchgear and turnkey field services with over 20 years of technical excellence, safety compliance, and power distribution engineering.
             </p>
             {/* Social Icons */}
             <div className="flex items-center gap-2 pt-1">
@@ -54,13 +54,6 @@ export const Footer: React.FC = () => {
               >
                 𝕏
               </a>
-              <a
-                href="#"
-                aria-label="Instagram"
-                className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center text-white hover:bg-[#0098da] transition-colors"
-              >
-                <span className="material-symbols-outlined text-[18px]">photo_camera</span>
-              </a>
             </div>
           </div>
 
@@ -70,20 +63,17 @@ export const Footer: React.FC = () => {
               Quick Links
             </span>
             <nav className="flex flex-col gap-2 text-[13px] text-[#c3e8ff]">
-              <Link href="/#hero" className="hover:text-white transition-colors">Home</Link>
-              <Link href="/#products-section" className="hover:text-white transition-colors">Products Catalog</Link>
-              <Link href="/#services-section" className="hover:text-white transition-colors">Electrical Services</Link>
-              <Link href="/#customers-section" className="hover:text-white transition-colors">Valued Clients</Link>
-              {/* <Link href="/#reviews-section" className="hover:text-white transition-colors">Client Reviews</Link> */}
-              <Link href="/#faq-section" className="hover:text-white transition-colors">Frequently Asked Questions</Link>
-              <Link href="/#contact-section" className="hover:text-white transition-colors">Contact Engineering</Link>
+              <Link href="/" className="hover:text-white transition-colors">Home Page</Link>
+              <Link href="/products" className="hover:text-white transition-colors">Products Catalog</Link>
+              <Link href="/services" className="hover:text-white transition-colors">Electrical Services</Link>
+              <Link href="/contact" className="hover:text-white transition-colors">Contact &amp; Factory Map</Link>
             </nav>
           </div>
 
-          {/* Contact Details (4 Cols) with NEW ADDRESS */}
+          {/* Contact Details (4 Cols) with ADDRESS */}
           <div className="md:col-span-4 flex flex-col gap-3 font-title">
             <span className="text-white uppercase text-[12px] tracking-wider font-bold text-[#98cded]">
-              Contact Details
+              Plant &amp; Office Location
             </span>
             <div className="flex flex-col gap-2 text-[13px] text-[#c3e8ff] font-body">
               <span className="text-[#e1f0f8] leading-relaxed font-medium">
@@ -111,9 +101,9 @@ export const Footer: React.FC = () => {
             © 2004–2026 Electrical Masters Switchgear Private Limited. All Rights Reserved.
           </p>
           <div className="flex items-center gap-4 text-[12px] text-[#c3e8ff] font-body">
-            <span>Privacy Policy</span>
+            <Link href="/contact" className="hover:text-white">Directions &amp; Map</Link>
             <span>•</span>
-            <span>Terms of Service</span>
+            <Link href="/products" className="hover:text-white">All Switchgear</Link>
           </div>
         </div>
       </div>

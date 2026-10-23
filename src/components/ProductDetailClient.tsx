@@ -117,54 +117,68 @@ export function ProductDetailClient({ product, otherProducts }: ProductDetailCli
           </div>
         </div>
 
-        {/* Product Hero Section */}
-        <section className="bg-gradient-to-b from-[#00283d] to-[#003c5a] text-white py-12 px-4 sm:px-8 border-b border-[#004d6d]/40">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* Left Content */}
-            <div className="lg:col-span-7 flex flex-col gap-4">
-              <div className="flex items-center gap-2">
-                <span className="px-3 py-1 bg-[#0098da] text-white rounded-full font-title text-[11px] font-bold uppercase tracking-wider shadow-sm">
+        {/* Product Hero Section with Full Product Image as Background */}
+        <section className="relative w-full overflow-hidden bg-[#03364f] text-white border-b border-white/10">
+          {/* Full Cover Product Image Background */}
+          <img
+            src={product.imageUrl}
+            alt={product.title}
+            className="absolute inset-0 w-full h-full object-cover object-center brightness-[0.85]"
+          />
+
+          {/* Hero Gradient Overlay for perfect contrast and readability */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                'linear-gradient(90deg, rgba(2, 44, 66, 0.92) 0%, rgba(3, 56, 82, 0.82) 45%, rgba(4, 72, 104, 0.55) 75%, rgba(6, 85, 120, 0.35) 100%), linear-gradient(180deg, rgba(2, 44, 66, 0.50) 0%, transparent 40%, rgba(2, 44, 66, 0.90) 100%)',
+            }}
+          />
+
+          {/* Hero Content */}
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 py-14 sm:py-20 flex flex-col justify-center min-h-[440px] sm:min-h-[500px]">
+            <div className="max-w-3xl flex flex-col gap-5">
+              {/* Badges */}
+              <div className="flex flex-wrap items-center gap-2.5">
+                <span className="px-3.5 py-1.5 bg-[#0098da] text-white rounded-full font-title text-[11px] font-bold uppercase tracking-wider shadow-md">
                   {product.badge}
                 </span>
-                <span className="text-[#98cded] font-technical text-[11px] font-semibold">
+                <span className="px-3.5 py-1.5 bg-white/15 backdrop-blur-md text-[#d5eefc] rounded-full font-technical text-[11px] font-semibold border border-white/20 shadow-sm flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-[#38bdf8]" />
                   {product.spec}
+                </span>
+                <span className="hidden sm:inline-flex px-3.5 py-1.5 bg-white/10 backdrop-blur-md text-emerald-300 rounded-full font-technical text-[11px] font-semibold border border-white/15 items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                  Tested &amp; Certified
                 </span>
               </div>
 
-              <h1 className="font-title text-[28px] sm:text-[40px] font-extrabold leading-tight tracking-tight text-white">
-                {product.title}
-              </h1>
+              {/* Title & Subtitle */}
+              <div className="flex flex-col gap-2">
+                <h1 className="font-title text-[32px] sm:text-[44px] lg:text-[50px] font-extrabold leading-tight tracking-tight text-white drop-shadow-sm">
+                  {product.title}
+                </h1>
+                <p className="font-body text-[#d1ebf9] text-[16px] sm:text-[19px] font-medium leading-relaxed max-w-2xl">
+                  {product.subtitle}
+                </p>
+              </div>
 
-              <p className="font-body text-[#d1ebf9] text-[16px] sm:text-[18px] font-medium leading-relaxed">
-                {product.subtitle}
-              </p>
-
-              <div className="pt-2 flex flex-wrap items-center gap-4">
+              {/* Action Buttons */}
+              <div className="pt-2 flex flex-wrap items-center gap-3.5">
                 <a
                   href="#inquiry-form"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#0098da] hover:bg-[#0084bd] text-white font-title text-[14px] font-bold rounded-xl shadow-md active:scale-95 transition-all"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#0098da] hover:bg-[#0084bd] active:bg-[#006f9e] text-white font-title text-[14px] font-bold rounded-xl shadow-lg active:scale-95 transition-all"
                 >
                   <Send className="w-4 h-4" />
                   <span>Request Technical Quote</span>
                 </a>
-              </div>
-            </div>
-
-            {/* Right Product Image Showcase */}
-            <div className="lg:col-span-5">
-              <div className="relative w-full h-72 sm:h-96 rounded-2xl overflow-hidden border-2 border-white/10 shadow-2xl bg-[#001d2b] group">
-                <img
-                  src={product.imageUrl}
-                  alt={product.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#001d2b]/80 via-transparent to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4 bg-black/40 backdrop-blur-md p-3.5 rounded-xl border border-white/10 flex items-center justify-between text-xs text-[#d1ebf9]">
-                  <span className="font-technical font-semibold flex items-center gap-1.5">
-                    <ShieldCheck className="w-4 h-4 text-[#0098da]" /> Tested & Certified
-                  </span>
-                  <span className="font-title font-bold text-white">EM Switchgear</span>
-                </div>
+                <a
+                  href="tel:+923004466489"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-white/15 hover:bg-white/25 text-white border border-white/25 font-title text-[14px] font-bold rounded-xl backdrop-blur-md active:scale-95 transition-all"
+                >
+                  <PhoneCall className="w-4 h-4 text-[#38bdf8]" />
+                  <span>Call Engineering Desk</span>
+                </a>
               </div>
             </div>
           </div>
