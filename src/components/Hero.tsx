@@ -55,11 +55,8 @@ export const Hero: React.FC = () => {
             {/* Headlines */}
             <div className="flex flex-col">
               <h1 className="font-title text-[32px] sm:text-[44px] lg:text-[50px] leading-tight text-white font-extrabold tracking-tight">
-                Electrical Masters
+                Electrical Masters Switchgear Private Limited
               </h1>
-              <span className="font-title text-[24px] sm:text-[32px] lg:text-[38px] text-[#38bdf8] font-bold leading-tight mt-1">
-                Switchgear Private Limited.
-              </span>
             </div>
 
             {/* Paragraph Description */}
