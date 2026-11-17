@@ -257,7 +257,7 @@ export const ContactSection: React.FC = () => {
                       Nawab Mashkoor Town Kahna Kacha Road Kahna Nou Lahore- Pakistan
                     </span>
                     <a
-                      href="https://www.google.com/maps/search/?api=1&query=Nawab+Mashkoor+Town+Kahna+Kacha+Road+Kahna+Nau+Lahore+Pakistan"
+                      href="https://www.google.com/maps?q=31.375889,74.352007"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-[11.5px] font-bold text-[#38bdf8] hover:underline mt-0.5"

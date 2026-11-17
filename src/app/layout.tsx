@@ -64,6 +64,12 @@ const jsonLd = {
     addressLocality: 'Lahore',
     addressCountry: 'PK',
   },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 31.375889,
+    longitude: 74.352007,
+  },
+  hasMap: 'https://www.google.com/maps?q=31.375889,74.352007',
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',

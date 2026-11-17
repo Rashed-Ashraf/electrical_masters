@@ -12,9 +12,9 @@ export const CompanyMap: React.FC<CompanyMapProps> = ({ className = '', showTitl
   const [copied, setCopied] = useState(false);
 
   const address = 'Nawab Mashkoor Town Kahna Kacha Road Kahna Nou Lahore- Pakistan';
-  const googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=Nawab+Mashkoor+Town+Kahna+Kacha+Road+Kahna+Nau+Lahore+Pakistan';
-  // Embed iframe with pin centered on Kahna Kacha Road Lahore
-  const embedUrl = 'https://maps.google.com/maps?q=Kahna%20Kacha%20Road%20Kahna%20Nau%20Lahore&t=&z=15&ie=UTF8&iwloc=&output=embed';
+  const googleMapsUrl = 'https://www.google.com/maps?q=31.375889,74.352007';
+  // Embed iframe with pin centered on exact factory coordinates (31°22'33.2"N 74°21'07.2"E)
+  const embedUrl = 'https://maps.google.com/maps?q=31.375889,74.352007&hl=en&z=16&output=embed';
 
   const copyAddress = () => {
     navigator.clipboard.writeText(address);
