@@ -144,10 +144,18 @@ export const ProductsSection: React.FC = () => {
             }}
           />
 
+          {/* Full Slide Background Clickable Link to Product Details */}
+          <Link
+            href={`/products/${currentProduct.id}`}
+            className="absolute inset-0 z-0 cursor-pointer"
+            title={`View ${currentProduct.title} specifications`}
+            aria-label={`View ${currentProduct.title} specifications`}
+          />
+
           {/* Main Slide Stage Content */}
-          <div className="relative z-10 w-full min-h-[460px] sm:min-h-[520px] md:min-h-[560px] flex flex-col items-center justify-between p-6 sm:p-10 text-center">
+          <div className="relative z-10 w-full min-h-[460px] sm:min-h-[520px] md:min-h-[560px] flex flex-col items-center justify-between p-6 sm:p-10 text-center pointer-events-none">
             {/* Top Slide Meta: Badge & Interactive Timer Badge */}
-            <div className="w-full flex items-center justify-between gap-2">
+            <div className="w-full flex items-center justify-between gap-2 pointer-events-auto">
               <span className="font-technical text-[10px] sm:text-[11px] uppercase tracking-widest text-white bg-white/20 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/25 font-bold shadow-sm">
                 {currentProduct.badge}
               </span>
@@ -159,20 +167,30 @@ export const ProductsSection: React.FC = () => {
             </div>
 
             {/* Center Visual Feature Pill */}
-            <div className="my-auto py-6 flex flex-col items-center justify-center max-w-xl w-full">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-black/40 backdrop-blur-md border border-[#0098da]/50 shadow-xl">
+            <Link
+              href={`/products/${currentProduct.id}`}
+              className="my-auto py-6 flex flex-col items-center justify-center max-w-xl w-full pointer-events-auto group/spec cursor-pointer"
+              title={`View ${currentProduct.title} details`}
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-black/40 backdrop-blur-md border border-[#0098da]/50 group-hover/spec:border-[#38bdf8] group-hover/spec:bg-black/60 shadow-xl transition-all group-hover/spec:scale-105">
                 <Sparkles className="w-4 h-4 text-[#38bdf8]" />
                 <span className="font-technical text-[12px] sm:text-[13px] text-[#38bdf8] font-bold tracking-wide">
                   {currentProduct.spec}
                 </span>
+                <ArrowRight className="w-3.5 h-3.5 text-[#38bdf8] opacity-0 -ml-1 group-hover/spec:opacity-100 group-hover/spec:ml-0 transition-all" />
               </div>
-            </div>
+            </Link>
 
             {/* Bottom Caption Area */}
-            <div className="w-full max-w-2xl flex flex-col items-center gap-2.5 mt-2 bg-[#022c42]/80 backdrop-blur-md p-5 sm:p-6 rounded-2xl border border-white/15 shadow-2xl">
-              <h3 className="font-title text-white text-[20px] sm:text-[24px] md:text-[26px] font-bold leading-snug">
-                {currentProduct.title}
-              </h3>
+            <div className="w-full max-w-2xl flex flex-col items-center gap-2.5 mt-2 bg-[#022c42]/80 backdrop-blur-md p-5 sm:p-6 rounded-2xl border border-white/15 shadow-2xl pointer-events-auto">
+              <Link
+                href={`/products/${currentProduct.id}`}
+                className="hover:text-[#38bdf8] transition-colors cursor-pointer"
+              >
+                <h3 className="font-title text-white hover:text-[#38bdf8] text-[20px] sm:text-[24px] md:text-[26px] font-bold leading-snug transition-colors">
+                  {currentProduct.title}
+                </h3>
+              </Link>
               <p className="font-body text-[#d5eefc] text-[13px] sm:text-[14.5px] leading-relaxed max-w-xl line-clamp-2">
                 {currentProduct.description}
               </p>
@@ -198,9 +216,12 @@ export const ProductsSection: React.FC = () => {
             {/* Left Chevron Navigation Arrow */}
             <button
               type="button"
-              onClick={prevSlide}
+              onClick={(e) => {
+                e.stopPropagation();
+                prevSlide();
+              }}
               aria-label="Previous Slide"
-              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-black/50 hover:bg-[#0098da] text-white flex items-center justify-center transition-all border border-white/20 backdrop-blur-md shadow-xl z-30 active:scale-90 cursor-pointer"
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-black/50 hover:bg-[#0098da] text-white flex items-center justify-center transition-all border border-white/20 backdrop-blur-md shadow-xl z-30 active:scale-90 cursor-pointer pointer-events-auto"
             >
               <ChevronLeft className="w-6 sm:w-7 h-6 sm:h-7" />
             </button>
@@ -208,22 +229,28 @@ export const ProductsSection: React.FC = () => {
             {/* Right Chevron Navigation Arrow */}
             <button
               type="button"
-              onClick={nextSlide}
+              onClick={(e) => {
+                e.stopPropagation();
+                nextSlide();
+              }}
               aria-label="Next Slide"
-              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-black/50 hover:bg-[#0098da] text-white flex items-center justify-center transition-all border border-white/20 backdrop-blur-md shadow-xl z-30 active:scale-90 cursor-pointer"
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-black/50 hover:bg-[#0098da] text-white flex items-center justify-center transition-all border border-white/20 backdrop-blur-md shadow-xl z-30 active:scale-90 cursor-pointer pointer-events-auto"
             >
               <ChevronRight className="w-6 sm:w-7 h-6 sm:h-7" />
             </button>
 
             {/* Bottom Horizontal Dash/Bar Indicators with Timer Fill on Active Item */}
-            <div className="flex items-center justify-center gap-2 pt-6 pb-1">
+            <div className="flex items-center justify-center gap-2 pt-6 pb-1 pointer-events-auto">
               {PRODUCTS.map((prod, idx) => {
                 const isActive = currentIndex === idx;
                 return (
                   <button
                     key={prod.id}
                     type="button"
-                    onClick={() => goToSlide(idx)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      goToSlide(idx);
+                    }}
                     aria-label={`Go to slide ${idx + 1}: ${prod.title}`}
                     className={`h-2 rounded-full transition-all duration-300 cursor-pointer relative overflow-hidden ${
                       isActive

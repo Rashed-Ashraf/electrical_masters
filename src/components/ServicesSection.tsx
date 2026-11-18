@@ -152,10 +152,18 @@ export const ServicesSection: React.FC = () => {
           onTouchEnd={handleTouchEnd}
         >
 
+          {/* Full Slide Background Clickable Link to Service Details */}
+          <Link
+            href={`/services#${currentService.id}`}
+            className="absolute inset-0 z-0 cursor-pointer"
+            title={`Explore ${currentService.title} scope & deliverables`}
+            aria-label={`Explore ${currentService.title} scope & deliverables`}
+          />
+
           {/* Main Slide Stage */}
-          <div className="relative w-full min-h-[440px] sm:min-h-[500px] md:min-h-[540px] flex flex-col items-center justify-between p-6 sm:p-10 text-center">
+          <div className="relative z-10 w-full min-h-[440px] sm:min-h-[500px] md:min-h-[540px] flex flex-col items-center justify-between p-6 sm:p-10 text-center pointer-events-none">
             {/* Slide Category Badge & Progress/Timer Tag */}
-            <div className="w-full flex items-center justify-between gap-2 z-20">
+            <div className="w-full flex items-center justify-between gap-2 z-20 pointer-events-auto">
               <span className="font-technical text-[10px] sm:text-[11px] uppercase tracking-widest text-[#38bdf8] bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 font-bold">
                 {currentService.badge}
               </span>
@@ -167,8 +175,12 @@ export const ServicesSection: React.FC = () => {
             </div>
 
             {/* Slide Graphic / Center Feature Box */}
-            <div className="relative my-auto py-4 flex flex-col items-center justify-center max-w-2xl w-full z-10 transition-all duration-500 ease-out">
-              <div className="w-28 sm:w-36 h-28 sm:h-36 rounded-3xl bg-gradient-to-br from-[#0098da]/30 to-[#004d6d]/50 border-2 border-[#0098da]/50 text-[#38bdf8] flex items-center justify-center shadow-[0_0_35px_rgba(0,152,218,0.3)] mb-4 hover:scale-105 transition-transform">
+            <Link
+              href={`/services#${currentService.id}`}
+              className="relative my-auto py-4 flex flex-col items-center justify-center max-w-2xl w-full z-10 transition-all duration-500 ease-out group/center cursor-pointer pointer-events-auto"
+              title={`Explore ${currentService.title} details`}
+            >
+              <div className="w-28 sm:w-36 h-28 sm:h-36 rounded-3xl bg-gradient-to-br from-[#0098da]/30 to-[#004d6d]/50 border-2 border-[#0098da]/50 group-hover/center:border-[#38bdf8] group-hover/center:shadow-[0_0_40px_rgba(56,189,248,0.5)] text-[#38bdf8] flex items-center justify-center shadow-[0_0_35px_rgba(0,152,218,0.3)] mb-4 group-hover/center:scale-106 transition-all">
                 {getServiceIcon(currentService.iconName)}
               </div>
 
@@ -177,19 +189,24 @@ export const ServicesSection: React.FC = () => {
                 {currentService.standards.map((std, idx) => (
                   <span
                     key={idx}
-                    className="px-2.5 py-1 rounded-lg bg-black/40 border border-white/10 text-[#98cded] font-technical text-[11px] font-bold"
+                    className="px-2.5 py-1 rounded-lg bg-black/40 border border-white/10 text-[#98cded] font-technical text-[11px] font-bold group-hover/center:border-[#38bdf8]/40 transition-colors"
                   >
                     {std}
                   </span>
                 ))}
               </div>
-            </div>
+            </Link>
 
-            {/* Bottom Caption Area (Slide Label & Text as in Reference) */}
-            <div className="w-full max-w-2xl flex flex-col items-center gap-2.5 z-20 mt-2">
-              <h3 className="font-title text-white text-[20px] sm:text-[24px] md:text-[26px] font-bold leading-snug">
-                {currentService.title}
-              </h3>
+            {/* Bottom Caption Area */}
+            <div className="w-full max-w-2xl flex flex-col items-center gap-2.5 z-20 mt-2 pointer-events-auto">
+              <Link
+                href={`/services#${currentService.id}`}
+                className="hover:text-[#38bdf8] transition-colors cursor-pointer"
+              >
+                <h3 className="font-title text-white hover:text-[#38bdf8] text-[20px] sm:text-[24px] md:text-[26px] font-bold leading-snug transition-colors">
+                  {currentService.title}
+                </h3>
+              </Link>
               <p className="font-body text-[#c3e8ff] text-[13px] sm:text-[14.5px] leading-relaxed max-w-xl line-clamp-2">
                 {currentService.shortDesc}
               </p>
@@ -205,7 +222,7 @@ export const ServicesSection: React.FC = () => {
                 </Link>
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white font-title text-[13px] font-semibold rounded-xl border border-white/15 transition-all"
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white/10 hover:bg-white/25 text-white font-title text-[13px] font-semibold rounded-xl border border-white/15 transition-all"
                 >
                   <span>Book Site Visit</span>
                 </Link>
@@ -215,9 +232,12 @@ export const ServicesSection: React.FC = () => {
             {/* Left Chevron Navigation Arrow */}
             <button
               type="button"
-              onClick={prevSlide}
+              onClick={(e) => {
+                e.stopPropagation();
+                prevSlide();
+              }}
               aria-label="Previous Slide"
-              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-black/40 hover:bg-[#0098da] text-white flex items-center justify-center transition-all border border-white/15 backdrop-blur-md shadow-lg z-30 active:scale-90 cursor-pointer"
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-black/40 hover:bg-[#0098da] text-white flex items-center justify-center transition-all border border-white/15 backdrop-blur-md shadow-lg z-30 active:scale-90 cursor-pointer pointer-events-auto"
             >
               <ChevronLeft className="w-6 sm:w-7 h-6 sm:h-7" />
             </button>
@@ -225,22 +245,28 @@ export const ServicesSection: React.FC = () => {
             {/* Right Chevron Navigation Arrow */}
             <button
               type="button"
-              onClick={nextSlide}
+              onClick={(e) => {
+                e.stopPropagation();
+                nextSlide();
+              }}
               aria-label="Next Slide"
-              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-black/40 hover:bg-[#0098da] text-white flex items-center justify-center transition-all border border-white/15 backdrop-blur-md shadow-lg z-30 active:scale-90 cursor-pointer"
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-black/40 hover:bg-[#0098da] text-white flex items-center justify-center transition-all border border-white/15 backdrop-blur-md shadow-lg z-30 active:scale-90 cursor-pointer pointer-events-auto"
             >
               <ChevronRight className="w-6 sm:w-7 h-6 sm:h-7" />
             </button>
 
             {/* Bottom Horizontal Dash/Bar Indicators with Active Timer Fill */}
-            <div className="flex items-center justify-center gap-2 pt-6 pb-1 z-20">
+            <div className="flex items-center justify-center gap-2 pt-6 pb-1 z-20 pointer-events-auto">
               {SERVICES_DATA.map((srv, idx) => {
                 const isActive = currentIndex === idx;
                 return (
                   <button
                     key={srv.id}
                     type="button"
-                    onClick={() => goToSlide(idx)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      goToSlide(idx);
+                    }}
                     aria-label={`Go to slide ${idx + 1}: ${srv.title}`}
                     className={`h-2 rounded-full transition-all duration-300 cursor-pointer relative overflow-hidden ${
                       isActive
