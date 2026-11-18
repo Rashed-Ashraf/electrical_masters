@@ -373,7 +373,7 @@ export function ContactClient() {
 
                   {/* Action Link */}
                   <a
-                    href="https://www.google.com/maps?q=31.375889,74.352007"
+                    href="https://maps.app.goo.gl/q6mPFM3sRHoJjjVb8"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 px-4 py-3 bg-[#0098da] hover:bg-[#0084bd] text-white font-title text-[13px] font-bold rounded-xl shadow transition-all"

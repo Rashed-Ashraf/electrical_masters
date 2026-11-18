@@ -12,7 +12,7 @@ export const CompanyMap: React.FC<CompanyMapProps> = ({ className = '', showTitl
   const [copied, setCopied] = useState(false);
 
   const address = 'Nawab Mashkoor Town Kahna Kacha Road Kahna Nou Lahore- Pakistan';
-  const googleMapsUrl = 'https://www.google.com/maps?q=31.375889,74.352007';
+  const googleMapsUrl = 'https://maps.app.goo.gl/q6mPFM3sRHoJjjVb8';
   // Embed iframe with pin centered on exact factory coordinates (31°22'33.2"N 74°21'07.2"E)
   const embedUrl = 'https://maps.google.com/maps?q=31.375889,74.352007&hl=en&z=16&output=embed';
 
@@ -77,18 +77,29 @@ export const CompanyMap: React.FC<CompanyMapProps> = ({ className = '', showTitl
       )}
 
       {/* Embedded Pinpoint Map Container */}
-      <div className="relative w-full h-[280px] sm:h-[360px] md:h-[400px] bg-[#001c2b]">
+      <div className="relative w-full h-[280px] sm:h-[360px] md:h-[400px] bg-[#001c2b] group">
         <iframe
           title="Electrical Masters Switchgear Location Map"
           src={embedUrl}
-          className="w-full h-full border-0 filter saturate-110 contrast-105"
+          className="w-full h-full border-0 filter saturate-110 contrast-105 pointer-events-none"
           loading="lazy"
           allowFullScreen
           referrerPolicy="no-referrer-when-downgrade"
         />
 
+        {/* Clickable Full Map Overlay */}
+        <a
+          href={googleMapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute inset-0 z-10 cursor-pointer transition-colors bg-black/0 group-hover:bg-[#0098da]/10"
+          title="Click to open location in Google Maps"
+        >
+          <span className="sr-only">Open location in Google Maps</span>
+        </a>
+
         {/* Floating Pinpoint Indicator Overlay Badge */}
-        <div className="absolute top-3 left-3 pointer-events-none bg-[#002233]/90 backdrop-blur-md border border-[#0098da]/40 text-white px-3.5 py-2 rounded-xl shadow-xl flex items-center gap-2.5 max-w-[90%]">
+        <div className="absolute top-3 left-3 pointer-events-none z-20 bg-[#002233]/90 backdrop-blur-md border border-[#0098da]/40 text-white px-3.5 py-2 rounded-xl shadow-xl flex items-center gap-2.5 max-w-[90%]">
           <div className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
           <div className="flex flex-col">
             <span className="font-title text-[11px] font-bold text-white leading-tight">
@@ -101,12 +112,12 @@ export const CompanyMap: React.FC<CompanyMapProps> = ({ className = '', showTitl
         </div>
 
         {/* Floating Bottom Quick Action */}
-        <div className="absolute bottom-3 right-3 flex items-center gap-2">
+        <div className="absolute bottom-3 right-3 z-20 flex items-center gap-2">
           <a
             href={googleMapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-3.5 py-2 bg-white text-[#002b40] font-title text-[12px] font-bold rounded-lg shadow-lg hover:bg-[#f0f7fb] transition-all flex items-center gap-1.5"
+            className="px-3.5 py-2 bg-white text-[#002b40] font-title text-[12px] font-bold rounded-lg shadow-lg hover:bg-[#f0f7fb] transition-all flex items-center gap-1.5 cursor-pointer"
           >
             <span>View Full Google Map</span>
             <ExternalLink className="w-3.5 h-3.5 text-[#0098da]" />
