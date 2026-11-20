@@ -268,11 +268,10 @@ export const ServicesSection: React.FC = () => {
                       goToSlide(idx);
                     }}
                     aria-label={`Go to slide ${idx + 1}: ${srv.title}`}
-                    className={`h-2 rounded-full transition-all duration-300 cursor-pointer relative overflow-hidden ${
-                      isActive
-                        ? 'w-12 bg-white/20 shadow-[0_0_8px_rgba(56,189,248,0.4)]'
-                        : 'w-6 bg-white/30 hover:bg-white/60'
-                    }`}
+                    className={`h-2 rounded-full transition-all duration-300 cursor-pointer relative overflow-hidden ${isActive
+                      ? 'w-12 bg-white/20 shadow-[0_0_8px_rgba(56,189,248,0.4)]'
+                      : 'w-6 bg-white/30 hover:bg-white/60'
+                      }`}
                   >
                     {isActive && (
                       <span
