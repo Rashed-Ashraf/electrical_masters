@@ -17,6 +17,7 @@
 .DS_Store
 *.pem
 *.zip
+!electrical-masters-standalone-build.zip
 Create_website_video_from_pictures_*.mp4
 
 # Debug logs
